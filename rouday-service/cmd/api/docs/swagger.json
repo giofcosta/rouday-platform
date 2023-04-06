@@ -1,0 +1,137 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/ping": {
+            "get": {
+                "description": "Simple ping method for testing purposes",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ping"
+                ],
+                "summary": "Ping",
+                "responses": {
+                    "200": {
+                        "description": "pong",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/week-configurations": {
+            "post": {
+                "description": "Creates a new week configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "week-configurations"
+                ],
+                "summary": "Create Week Configuration",
+                "parameters": [
+                    {
+                        "description": "Create Week Configuration",
+                        "name": "weekConfiguration",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.WeekConfiguration"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.WeekConfiguration"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Routine": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "daily_average_hours": {
+                    "type": "number"
+                },
+                "friday": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "monday": {
+                    "type": "number"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "saturday": {
+                    "type": "number"
+                },
+                "sunday": {
+                    "type": "number"
+                },
+                "thursday": {
+                    "type": "number"
+                },
+                "tuesday": {
+                    "type": "number"
+                },
+                "wednesday": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.WeekConfiguration": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "routines": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Routine"
+                    }
+                },
+                "util_days_per_week": {
+                    "type": "integer"
+                },
+                "week_start": {
+                    "type": "string"
+                },
+                "work_hours_per_day": {
+                    "type": "number"
+                }
+            }
+        }
+    }
+}
