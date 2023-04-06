@@ -1,0 +1,88 @@
+definitions:
+  models.Routine:
+    properties:
+      comment:
+        type: string
+      daily_average_hours:
+        type: number
+      friday:
+        type: number
+      id:
+        type: string
+      monday:
+        type: number
+      name:
+        type: string
+      saturday:
+        type: number
+      sunday:
+        type: number
+      thursday:
+        type: number
+      tuesday:
+        type: number
+      wednesday:
+        type: number
+    type: object
+  models.WeekConfiguration:
+    properties:
+      id:
+        type: string
+      routines:
+        items:
+          $ref: '#/definitions/models.Routine'
+        type: array
+      util_days_per_week:
+        type: integer
+      week_start:
+        type: string
+      work_hours_per_day:
+        type: number
+    type: object
+info:
+  contact: {}
+paths:
+  /ping:
+    get:
+      description: Simple ping method for testing purposes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: pong
+          schema:
+            type: string
+      summary: Ping
+      tags:
+      - ping
+  /week-configurations:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new week configuration
+      parameters:
+      - description: Create Week Configuration
+        in: body
+        name: weekConfiguration
+        required: true
+        schema:
+          $ref: '#/definitions/models.WeekConfiguration'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.WeekConfiguration'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create Week Configuration
+      tags:
+      - week-configurations
+swagger: "2.0"

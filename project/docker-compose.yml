@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  rouday-service:
+    build: 
+      context: ./../rouday-service
+      dockerfile: ./../rouday-service/rouday-service.dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+
+  mongo:
+    image: "mongo:4.4"
+    container_name: "mongo"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: rouday
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./db-data/mongo/:/data/db
+
+volumes:
+  mongo_data:
