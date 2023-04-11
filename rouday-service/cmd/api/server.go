@@ -37,7 +37,12 @@ func (s *Server) RegisterRoutes() {
 	s.Handler.Router.HandleFunc(prefix + "/ping",  s.Handler.PingHandler).Methods(http.MethodGet)
 
 	// week configuration routes
+	s.Handler.Router.HandleFunc(prefix + "/week-configurations/{id}", s.Handler.GetWeekConfiguration).Methods(http.MethodGet)
 	s.Handler.Router.HandleFunc(prefix + "/week-configurations", s.Handler.CreateWeekConfiguration).Methods(http.MethodPost)
+	s.Handler.Router.HandleFunc(prefix + "/week-configurations/{id}", s.Handler.UpdateWeekConfiguration).Methods(http.MethodPut)
+	s.Handler.Router.HandleFunc(prefix + "/week-configurations/{id}/routine/{routine-id}", s.Handler.UpdateWeekConfigurationRoutine).Methods(http.MethodPut)
+
+
 
 	// swagger route
 	httpSwagger.URL("swagger.json")

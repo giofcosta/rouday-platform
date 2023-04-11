@@ -35,10 +35,9 @@ func TestCreateWeekConfiguration(t *testing.T) {
 	
 		weekConfig := createValidWeekConfiguration()
 	
-		// Add a mock response for a successful InsertOne operation
 		mt.AddMockResponses(mtest.CreateSuccessResponse())
 	
-		err := repo.CreateWeekConfiguration(weekConfig)
+		err := repo.Create(weekConfig)
 		if err != nil {
 			t.Errorf("CreateWeekConfiguration() error: %v", err)
 		}
@@ -51,10 +50,9 @@ func TestCreateWeekConfiguration(t *testing.T) {
 		}
 
 		weekConfig := createValidWeekConfiguration()
-		_ = repo.CreateWeekConfiguration(weekConfig)
+		_ = repo.Create(weekConfig)
 
-		// Try inserting a duplicate
-		err := repo.CreateWeekConfiguration(weekConfig)
+		err := repo.Create(weekConfig)
 		if err == nil {
 			t.Error("CreateWeekConfiguration() should return an error when inserting a duplicate")
 		}
@@ -65,12 +63,10 @@ func TestCreateWeekConfiguration(t *testing.T) {
 			db: mt.Client,
 		}
 
-		// Create an invalid WeekConfiguration instance
 		weekConfig := &models.WeekConfiguration{
-			// Fill in your invalid WeekConfiguration fields here.
 		}
 
-		err := repo.CreateWeekConfiguration(weekConfig)
+		err := repo.Create(weekConfig)
 		if err == nil {
 			t.Error("CreateWeekConfiguration() should return an error when inserting an invalid configuration")
 		}
@@ -81,7 +77,6 @@ func TestCreateWeekConfiguration(t *testing.T) {
 			db: mt.Client,
 		}
 
-		// Return a generic error when inserting a document
 		mt.AddMockResponses(mtest.CreateCommandErrorResponse(
 			mtest.CommandError{
 				Code:    1000,
@@ -92,7 +87,7 @@ func TestCreateWeekConfiguration(t *testing.T) {
 
 		weekConfig := createValidWeekConfiguration()
 
-		err := repo.CreateWeekConfiguration(weekConfig)
+		err := repo.Create(weekConfig)
 		if err == nil {
 			t.Error("CreateWeekConfiguration() should return an error when there is a database error")
 		}
